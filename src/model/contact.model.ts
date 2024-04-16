@@ -8,7 +8,7 @@ export class ContactResponse {
   phone?: string;
   user_id?: string;
 
-  constructor(readonly contact: Partial<Contact>) {
+  constructor(contact: Contact) {
     this.id = contact.id;
     this.first_name = contact.first_name;
     this.last_name = contact.last_name;

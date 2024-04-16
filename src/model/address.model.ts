@@ -6,7 +6,7 @@ export class AddressResponse {
   postal_code: number;
   contact_id: string;
 
-  constructor(readonly data: Partial<Address>) {
+  constructor(data: Address) {
     this.id = data.id;
     this.address = data.address;
     this.postal_code = data.postal_code;

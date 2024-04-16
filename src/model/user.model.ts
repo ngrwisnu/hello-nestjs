@@ -11,7 +11,7 @@ export class UserResponse {
   name: string;
   token?: string;
 
-  constructor(readonly user: Partial<User>) {
+  constructor(user: User) {
     this.username = user.username;
     this.name = user.name;
     this.token = user.token;

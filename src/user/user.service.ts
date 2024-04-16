@@ -36,11 +36,6 @@ export class UserService {
 
     const user = await this.prisma.user.create({
       data: payload,
-      select: {
-        username: true,
-        name: true,
-        token: true,
-      },
     });
 
     return new UserResponse(user);
@@ -49,7 +44,7 @@ export class UserService {
   async login(request: LoginUser): Promise<UserResponse> {
     const payload = this.validation.validate(UserValidation.LOGIN, request);
 
-    const user = await this.prisma.user.findUnique({
+    let user = await this.prisma.user.findUnique({
       where: {
         username: payload.username,
       },
@@ -68,21 +63,16 @@ export class UserService {
       throw new HttpException('Username or password is wrong', 400);
     }
 
-    const res = await this.prisma.user.update({
+    user = await this.prisma.user.update({
       where: {
         username: user.username,
       },
       data: {
         token: uuid(),
       },
-      select: {
-        username: true,
-        name: true,
-        token: true,
-      },
     });
 
-    return new UserResponse(res);
+    return new UserResponse(user);
   }
 
   async get(user: User): Promise<UserResponse> {
@@ -105,11 +95,6 @@ export class UserService {
         username: user.username,
       },
       data: user,
-      select: {
-        username: true,
-        name: true,
-        token: true,
-      },
     });
 
     return new UserResponse(result);
